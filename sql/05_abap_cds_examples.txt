@@ -1,0 +1,34 @@
+// Illustrative ABAP CDS view entities based on this portfolio model.
+// These examples require an SAP ABAP environment to run.
+
+@EndUserText.label: 'Purchase Order Item Value'
+@AccessControl.authorizationCheck: #NOT_REQUIRED
+define view entity ZI_PurchaseOrderItemValue
+  as select from zpo_item as Item
+    inner join zmaterial as Material
+      on Material.material_id = Item.material_id
+{
+  key Item.purchase_order_id                  as PurchaseOrder,
+  key Item.item_number                       as PurchaseOrderItem,
+      Material.material_name                 as MaterialName,
+      Item.ordered_quantity                  as OrderedQuantity,
+      Item.net_price                         as NetPrice,
+      Item.ordered_quantity * Item.net_price as ItemValue,
+      Item.delivery_date                     as DeliveryDate
+}
+
+@EndUserText.label: 'Supplier Purchase Value'
+@AccessControl.authorizationCheck: #NOT_REQUIRED
+define view entity ZC_SupplierPurchaseValue
+  as select from ZI_PurchaseOrderItemValue as ItemValue
+    inner join zpo_header as Header
+      on Header.purchase_order_id = ItemValue.PurchaseOrder
+    inner join zvendor as Vendor
+      on Vendor.vendor_id = Header.vendor_id
+{
+  key Vendor.vendor_id           as Supplier,
+      Vendor.vendor_name         as SupplierName,
+      sum( ItemValue.ItemValue ) as OrderedValue
+}
+group by Vendor.vendor_id, Vendor.vendor_name
+
