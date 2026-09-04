@@ -1,0 +1,9 @@
+purchase_order_id,item_number,material_name,ordered_quantity,received_quantity,open_quantity,delivery_date
+450004,10,Cardboard box large,500,300,200,2026-07-16
+450004,20,Packaging tape 50 mm,100,0,100,2026-07-16
+450007,10,Control cable 10 m,50,30,20,2026-08-18
+450007,20,Industrial sensor,10,0,10,2026-08-18
+450008,10,Office monitor 27 inch,8,0,8,2026-08-28
+450008,20,Wireless keyboard,8,0,8,2026-08-28
+450010,10,Safety gloves,200,0,200,2026-09-10
+
